@@ -1,0 +1,57 @@
+Ex2:
+class BankAccount {
+  int accountId;
+  String accountOwner;
+  double _balance;
+
+  BankAccount(this.accountId, this.accountOwner) : _balance = 0.0;
+
+
+  double balance() {
+    return _balance;
+  }
+
+  void withdraw(double amount) {
+    if (amount > _balance) {
+      throw Exception("Insufficient funds");
+    }
+    _balance -= amount;
+  }
+
+  void credit(double amount) {
+    _balance += amount;
+  }
+}
+
+class Bank {
+  List<BankAccount> accounts = [];
+
+  // Method to create a new account
+  BankAccount createAccount(int accountId, String accountOwner) {
+    // Check for unique account ID
+    for (var account in accounts) {
+      if (account.accountId == accountId) {
+        throw Exception("Account ID already exists");
+      }
+    }
+    // Create new account
+    var newAccount = BankAccount(accountId, accountOwner);
+    accounts.add(newAccount);
+    return newAccount;
+  }
+}
+
+void main() {
+  var bank = Bank();
+
+  var account1 = bank.createAccount(1, "Bobo");
+  account1.credit(100);
+  print("Account Balance: \$${account1.balance()}");
+
+  try {
+    account1.withdraw(600); 
+  } catch (e) {
+    print(e);
+  }
+}
+

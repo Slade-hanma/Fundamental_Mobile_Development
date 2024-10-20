@@ -1,0 +1,51 @@
+Exercise 1:
+enum Skill {
+  FLUTTER,
+  DART,
+  OTHER,
+}
+
+class Address {
+  String street;
+  String city;
+  String zipCode;
+
+  Address(this.street, this.city, this.zipCode);
+}
+
+class Employee {
+  String name;
+  double baseSalary;
+  List<Skill> skills;
+  Address address;
+  int yearsOfExperience;
+
+  Employee(this.name, this.baseSalary, this.skills, this.address, this.yearsOfExperience);
+
+  // Named constructor for mobile developers
+  Employee.mobileDeveloper(String name, Address address, int yearsOfExperience){
+      : this(name, 40000, [Skill.FLUTTER, Skill.DART], address, yearsOfExperience);
+
+  double computeSalary() {
+    double salary = baseSalary + (yearsOfExperience * 2000);
+    for (var skill in skills) {
+      if (skill == Skill.FLUTTER) {
+        salary += 5000;
+      } else if (skill == Skill.DART) {
+        salary += 3000;
+      } else if (skill == Skill.OTHER) {
+        salary += 1000;
+      }
+    }
+    return salary;
+  }
+}
+
+void main() {
+  var address = Address("123 Main St", "Cityville", "12345");
+  var emp1 = Employee.mobileDeveloper("Alice", address, 5);
+
+  print("Employee Name: ${emp1.name}");
+  print("Computed Salary: \$${emp1.computeSalary()}");
+}
+

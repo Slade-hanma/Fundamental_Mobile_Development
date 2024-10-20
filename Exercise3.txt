@@ -1,0 +1,50 @@
+Ex3:
+class CustomDuration {
+  final int _milliseconds;
+
+  CustomDuration._(this._milliseconds) {
+    if (_milliseconds < 0) {
+      throw ArgumentError("Duration must be greater than or equal to 0");
+    }
+  }
+
+  factory CustomDuration.fromHours(int hours) {
+    return CustomDuration._(hours * 3600000);
+  }
+
+  factory CustomDuration.fromMinutes(int minutes) {
+    return CustomDuration._(minutes * 60000);
+  }
+
+  factory CustomDuration.fromSeconds(int seconds) {
+    return CustomDuration._(seconds * 1000);
+  }
+
+  int inMilliseconds() {
+    return _milliseconds;
+  }
+
+  bool operator >(CustomDuration other) {
+    return _milliseconds > other._milliseconds;
+  }
+
+  CustomDuration operator +(CustomDuration other) {
+    return CustomDuration._(_milliseconds + other._milliseconds);
+  }
+
+  CustomDuration operator -(CustomDuration other) {
+    if (_milliseconds < other._milliseconds) {
+      throw Exception("Resulting duration cannot be negative");
+    }
+    return CustomDuration._(_milliseconds - other._milliseconds);
+  }
+
+  @override
+  String toString() {
+    final hours = _milliseconds ~/ 3600000;
+    final minutes = (_milliseconds % 3600000) ~/ 60000;
+    final seconds = (_milliseconds % 60000) ~/ 1000;
+    return "${hours}h ${minutes}m ${seconds}s";
+  }
+}
+
